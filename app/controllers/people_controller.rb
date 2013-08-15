@@ -1,10 +1,11 @@
 class PeopleController < ApplicationController
+  before_filter :logged_in?
   before_action :set_person, only: [:show, :edit, :update, :destroy]
 
   # GET /people
   # GET /people.json
   def index
-    @people = Person.all
+    @people = Person.where(user_id: current_user.id)
   end
 
   # GET /people/1
@@ -25,6 +26,7 @@ class PeopleController < ApplicationController
   # POST /people.json
   def create
     @person = Person.new(person_params)
+    @person.user = current_user
 
     respond_to do |format|
       if @person.save
@@ -69,6 +71,12 @@ class PeopleController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
-      params.require(:person).permit(:name, :last_name, :email, :company, :job_title, :phone, :website, :user_id)
+      params.require(:person).permit(:name, :last_name, :email, :company, :job_title, :phone, :website)
+    end
+    
+    def check_permissions
+        unless current_user
+          raise SecurityError, "You have no permissions to access this page"
+        end
     end
 end
