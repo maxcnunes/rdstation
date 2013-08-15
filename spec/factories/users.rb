@@ -5,5 +5,6 @@ FactoryGirl.define do
     email "MyString"
     password_hash "MyString"
     password_salt "MyString"
+    password "MyString"
   end
 end

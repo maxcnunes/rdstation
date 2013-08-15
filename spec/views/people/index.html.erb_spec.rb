@@ -10,8 +10,7 @@ describe "people/index" do
         :company => "Company",
         :job_title => "Job Title",
         :phone => "Phone",
-        :website => "Website",
-        :user => nil
+        :website => "Website"
       ),
       stub_model(Person,
         :name => "Name",
@@ -20,8 +19,7 @@ describe "people/index" do
         :company => "Company",
         :job_title => "Job Title",
         :phone => "Phone",
-        :website => "Website",
-        :user => nil
+        :website => "Website"
       )
     ])
   end
@@ -36,6 +34,5 @@ describe "people/index" do
     assert_select "tr>td", :text => "Job Title".to_s, :count => 2
     assert_select "tr>td", :text => "Phone".to_s, :count => 2
     assert_select "tr>td", :text => "Website".to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
   end
 end

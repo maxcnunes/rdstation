@@ -9,8 +9,7 @@ describe "people/show" do
       :company => "Company",
       :job_title => "Job Title",
       :phone => "Phone",
-      :website => "Website",
-      :user => nil
+      :website => "Website"
     ))
   end
 
@@ -24,6 +23,5 @@ describe "people/show" do
     rendered.should match(/Job Title/)
     rendered.should match(/Phone/)
     rendered.should match(/Website/)
-    rendered.should match(//)
   end
 end

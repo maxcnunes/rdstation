@@ -9,8 +9,7 @@ describe "people/edit" do
       :company => "MyString",
       :job_title => "MyString",
       :phone => "MyString",
-      :website => "MyString",
-      :user => nil
+      :website => "MyString"
     ))
   end
 
@@ -26,7 +25,6 @@ describe "people/edit" do
       assert_select "input#person_job_title[name=?]", "person[job_title]"
       assert_select "input#person_phone[name=?]", "person[phone]"
       assert_select "input#person_website[name=?]", "person[website]"
-      assert_select "input#person_user[name=?]", "person[user]"
     end
   end
 end
