@@ -3,6 +3,7 @@ Rdstation::Application.routes.draw do
   root :to => "users#new"
 
   resources :users
+  resources :people
   resources :sessions
 
   get "log_out" => "sessions#destroy", :as => "log_out"

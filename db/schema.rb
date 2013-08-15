@@ -11,7 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130815042241) do
+ActiveRecord::Schema.define(version: 20130815043443) do
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "company"
+    t.string   "job_title"
+    t.string   "phone"
+    t.string   "website"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organizations", ["user_id"], name: "index_organizations_on_user_id"
+
+  create_table "people", force: true do |t|
+    t.string   "name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "company"
+    t.string   "job_title"
+    t.string   "phone"
+    t.string   "website"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "people", ["user_id"], name: "index_people_on_user_id"
 
   create_table "pipedrive_configs", force: true do |t|
     t.string   "key"
