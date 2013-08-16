@@ -7,7 +7,9 @@ Rdstation::Application.routes.draw do
   resources :sessions
 
   # Pipedrive
-  post "pipedrive_configs/create"
+  get "pipedrive_configs" => "pipedrive_configs#index"
+  post "pipedrive_configs/app_key"
+  delete "pipedrive_configs" => "pipedrive_configs#destroy"
 
   # Authetication
   get "log_out" => "sessions#destroy", :as => "log_out"
