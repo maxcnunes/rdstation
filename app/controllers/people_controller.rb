@@ -30,6 +30,11 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
+        # Pipedrive
+        if current_pipedrive_key
+          PipedriveConfig.create_organization(@person, current_pipedrive_key)
+        end
+
         format.html { redirect_to @person, notice: 'Person was successfully created.' }
         format.json { render action: 'show', status: :created, location: @person }
       else
@@ -72,11 +77,5 @@ class PeopleController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
       params.require(:person).permit(:name, :last_name, :email, :company, :job_title, :phone, :website)
-    end
-    
-    def check_permissions
-        unless current_user
-          raise SecurityError, "You have no permissions to access this page"
-        end
     end
 end

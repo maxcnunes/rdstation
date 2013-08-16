@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
       end 
     end
 
+    def current_pipedrive_key
+      @pipedrive_app_key ||= PipedriveConfig.find_app_key_by_user(current_user) if session[:pipedrive_key]
+    end
+
   private
 
     def current_user

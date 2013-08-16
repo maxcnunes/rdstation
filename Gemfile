@@ -10,6 +10,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 
+# Our Pipedrive Gem
+gem 'pipedrive_rdstation', :github => 'maxcnunes/pipedrive_rdstation'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'

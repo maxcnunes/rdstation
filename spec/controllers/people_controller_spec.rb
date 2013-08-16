@@ -3,7 +3,11 @@ require 'spec_helper'
 describe PeopleController do
 
   let(:current_user) { FactoryGirl.create(:user) }
-  let(:valid_attributes) { { "name" => "MyString", "user_id" =>  current_user.id } }
+  let(:valid_attributes) { {
+    "name" => "Jack Miller",
+    "company" => "ABC Company",
+    "user_id" =>  current_user.id
+  }}
 
   before(:each) do
     session[:user_id] = current_user.id
@@ -46,6 +50,18 @@ describe PeopleController do
         expect {
           post :create, {:person => valid_attributes}
         }.to change(Person, :count).by(1)
+      end
+
+      it "creates Pipedrive organization" do
+        controller.stub(:current_pipedrive_key).
+          and_return(FactoryGirl.create(:pipedrive_config, user: current_user))
+        
+        Pipedrive::Organization.any_instance.stub(:create).
+          and_return({"data"=> {"id"=> 3 }})
+        
+        expect {
+          post :create, {:person => valid_attributes}
+        }.to change(PipedriveConfig, :count).by(1)
       end
 
       it "assigns a newly created person as @person" do
