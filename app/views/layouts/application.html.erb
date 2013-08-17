@@ -28,11 +28,7 @@
         </div><!-- /.navbar -->
       </div>
 
-      <% flash.each do |key, value| %>
-        <div class="<%= flash_class(key) %>">
-          <%= value %>
-        </div>
-      <% end %>
+      <%= bootstrap_flash %>
 
       <div id="user_nav">
         <% if current_user %>
