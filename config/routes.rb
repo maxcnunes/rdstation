@@ -1,6 +1,6 @@
 Rdstation::Application.routes.draw do
   get "sessions/new"
-  root :to => "users#new"
+  root :to => "people#index"
 
   resources :users
   resources :people

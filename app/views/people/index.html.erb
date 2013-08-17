@@ -1,8 +1,6 @@
 <h1>Listing people</h1>
 
-<%= link_to 'Pipedrive', pipedrive_configs_path %>
-
-<table>
+<table class="table  table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -38,4 +36,4 @@
 
 <br>
 
-<%= link_to 'New Person', new_person_path %>
+<%= link_to 'New Person', new_person_path, :class => 'btn btn-success' %>

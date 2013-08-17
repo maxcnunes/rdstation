@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'bcrypt-ruby', :require => 'bcrypt'
+gem 'twitter-bootstrap-rails'
 
 # Our Pipedrive Gem
 gem 'pipedrive_rdstation', :github => 'maxcnunes/pipedrive_rdstation'
