@@ -17,17 +17,44 @@ describe PipedriveConfigsController do
   end
 
   describe "POST app_key" do
+    def stub_pipedrive_requests
+      controller.stub(:current_pipedrive_key).
+        and_return(FactoryGirl.create(:pipedrive_config, user: current_user))
+      
+      Pipedrive::PersonField.any_instance.stub(:create).
+        and_return({"data"=> {"id"=> 3 }})
+
+      Pipedrive::PersonField.any_instance.stub(:find).
+        and_return({"data"=> {"key"=> "819dea5b6358897ed5bbc8b85d1defb14fabcc8b" }})
+    end
+
     describe "with valid params" do
+
       it "stores the Pipedrive app_key" do
+        stub_pipedrive_requests
         valid_params = {:pipedrive_config => { value: valid_app_key }}
         expect {
           post :app_key, valid_params
-        }.to change(PipedriveConfig, :count).by(1)
+        }.to change(PipedriveConfig.where(key: PipedriveConfig::KEYS[:app_key]), :count).by(1)
+      end
+
+      it "generates Pipedrive custom fields" do
+        stub_pipedrive_requests
+        
+        custom_fields_pipedrive_configs = [
+          PipedriveConfig::KEYS[:custom_field_job], 
+          PipedriveConfig::KEYS[:custom_field_website]]
+
+        valid_params = {:pipedrive_config => { value: valid_app_key }}
+        expect {
+          post :app_key, valid_params
+        }.to change(PipedriveConfig.where(key: custom_fields_pipedrive_configs), :count).by(2)
       end
     end
 
     describe "with invalid params" do
       it "responds with unprocessable entity status" do
+        stub_pipedrive_requests
         invalid_params = {:pipedrive_config => { value: ""}}
         post :app_key, invalid_params
         response.should be_success

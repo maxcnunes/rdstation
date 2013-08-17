@@ -46,23 +46,44 @@ describe PeopleController do
 
   describe "POST create" do
     describe "with valid params" do
+      before(:each) do
+        FactoryGirl.create(:pipedrive_config, user: current_user, key: PipedriveConfig::KEYS[:custom_field_job])
+        FactoryGirl.create(:pipedrive_config, user: current_user, key: PipedriveConfig::KEYS[:custom_field_website])
+      end
+
       it "creates a new Person" do
         expect {
           post :create, {:person => valid_attributes}
         }.to change(Person, :count).by(1)
       end
 
-      it "creates Pipedrive organization" do
+      def stub_pipedrive_requests
         controller.stub(:current_pipedrive_key).
           and_return(FactoryGirl.create(:pipedrive_config, user: current_user))
-        
+
         Pipedrive::Organization.any_instance.stub(:create).
           and_return({"data"=> {"id"=> 3 }})
+
+        Pipedrive::Person.any_instance.stub(:create).
+          and_return({})
+      end
+
+      it "imports person to Pipedrive" do
+        PipedriveConfig.should_receive(:import_person_to_pipedrive)
+
+        stub_pipedrive_requests
+
+        post :create, {:person => valid_attributes}
+      end
+
+      it "creates Pipedrive organization" do
+        stub_pipedrive_requests
         
         expect {
           post :create, {:person => valid_attributes}
         }.to change(PipedriveConfig, :count).by(1)
       end
+
 
       it "assigns a newly created person as @person" do
         post :create, {:person => valid_attributes}

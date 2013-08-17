@@ -6,10 +6,11 @@ class PipedriveConfigsController < ApplicationController
   end
   
   def app_key
-    paramas_find_or_create = { user_id: current_user.id, key: PipedriveConfig::KEYS[:app_key] }
-    
-    @pipedrive_config = PipedriveConfig.where(paramas_find_or_create).first || PipedriveConfig.new(paramas_find_or_create)
-    @pipedrive_config.value = params[:pipedrive_config][:value]
+    # app key
+    @pipedrive_config = PipedriveConfig.find_or_initialize_app_key(params[:pipedrive_config][:value], current_user)
+
+    # custom fields
+    PipedriveConfig.generate_custom_fields(current_user, @pipedrive_config.value)
 
     respond_to do |format|
       if @pipedrive_config.save

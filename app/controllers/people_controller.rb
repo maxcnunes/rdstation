@@ -32,7 +32,7 @@ class PeopleController < ApplicationController
       if @person.save
         # Pipedrive
         if current_pipedrive_key
-          PipedriveConfig.create_organization(@person, current_pipedrive_key)
+          PipedriveConfig.import_person_to_pipedrive(@person, current_pipedrive_key)
         end
 
         format.html { redirect_to @person, notice: 'Person was successfully created.' }
