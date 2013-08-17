@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    session[:user_id] = session[:pipedrive_key] = nil
     redirect_to log_in_url, :notice => "Logged out!"
   end
 end
