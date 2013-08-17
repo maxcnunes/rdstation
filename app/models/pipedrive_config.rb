@@ -53,7 +53,7 @@ class PipedriveConfig < ActiveRecord::Base
     website_field_key = where(key: KEYS[:custom_field_website], user_id: person.user_id).first.value
 
     person_to_import = {
-      name: person.name,
+      name: "#{person.name} #{person.last_name}",
       org_id: org.value,
       email: [person.email],
       phone: [person.phone],

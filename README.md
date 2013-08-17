@@ -5,12 +5,12 @@ RD Station Web App
 [![Coverage Status](https://coveralls.io/repos/maxcnunes/rdstation/badge.png?branch=master)](https://coveralls.io/r/maxcnunes/rdstation?branch=master)
 [![Code Climate](https://codeclimate.com/github/maxcnunes/rdstation.png)](https://codeclimate.com/github/maxcnunes/rdstation)
 
-This is a simple demo app for import data from RD Station to Pipedrive using Pipedrive RD Station(https://github.com/maxcnunes/pipedrive_rdstation) gem.
+This is a simple demo app for import data from RD Station to Pipedrive using [Pipedrive RD Station gem](https://github.com/maxcnunes/pipedrive_rdstation).
 
 
 ### Install
 
-Is not a big deal, just normal rails approach:
+It is not a big deal, just normal rails approach:
 
 ```bash
 bundle
