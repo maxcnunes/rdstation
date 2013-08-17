@@ -34,16 +34,16 @@
         <% if current_user %>
           Logged in as <%= current_user.email %>.
           <%= link_to "Log out", log_out_path %>
+          <% if current_pipedrive_key %>
+          <span class="label label-success pull-right">Pipedrive actived</span>
+          <% else %>
+          <span class="label label-important pull-right">Pipedrive deactiated</span>
+          <% end %>
         <% else %>
           <%= link_to "Sign up", sign_up_path %> or
           <%= link_to "log in", log_in_path %>
         <% end %>
 
-        <% if current_pipedrive_key %>
-        <span class="label label-success pull-right">Pipedrive actived</span>
-        <% else %>
-        <span class="label label-important pull-right">Pipedrive deactiated</span>
-        <% end %>
       </div>
 
       <div id="content">
