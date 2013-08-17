@@ -50,13 +50,13 @@ class PipedriveConfig < ActiveRecord::Base
   end
 
   def self.import_person_to_pipedrive(person, app_key)
-    org = create_organization(person, app_key)
+    org_id = person.company.blank? ? "" : create_organization(person, app_key).value 
     job_field_key = where(key: KEYS[:custom_field_job], user_id: person.user_id).first.value
     website_field_key = where(key: KEYS[:custom_field_website], user_id: person.user_id).first.value
 
     person_to_import = {
       name: "#{person.name} #{person.last_name}",
-      org_id: org.value,
+      org_id: org_id,
       email: [person.email],
       phone: [person.phone],
       job_field_key => person.job_title,

@@ -26,6 +26,7 @@ class PipedriveConfigsController < ApplicationController
   def destroy
     @pipedrive_config = PipedriveConfig.where(user_id: current_user.id, key: PipedriveConfig::KEYS[:app_key]).first
     @pipedrive_config.destroy
+    session[:pipedrive_key] = nil
     respond_to do |format|
       format.html { redirect_to pipedrive_configs_url, notice: 'Pipedrive was successfully disabled.' }
       format.json { head :no_content }
