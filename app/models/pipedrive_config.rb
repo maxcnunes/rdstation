@@ -1,6 +1,6 @@
 class PipedriveConfig < ActiveRecord::Base
   belongs_to :user
-
+  
   validates_presence_of :key, :value, :user_id
 
   KEYS = { 
@@ -34,17 +34,19 @@ class PipedriveConfig < ActiveRecord::Base
   end
 
   def self.generate_custom_field(user, app_key, label_name, field_key)
-    custom_field = Pipedrive::PersonField.new(app_key)
+    unless exists?(key: field_key, user_id: user.id)
+      custom_field = Pipedrive::PersonField.new(app_key)
 
-    field_response = custom_field.create({ name: label_name, field_type: "varchar" })
-    field_id = custom_field.id_from_response(field_response)
+      field_response = custom_field.create({ name: label_name, field_type: "varchar" })
+      field_id = custom_field.id_from_response(field_response)
 
-    field = custom_field.find(field_id)
+      field = custom_field.find(field_id)
 
-    create(
-      key: field_key, 
-      value: custom_field.key_from_response(field), 
-      user_id: user.id)
+      create(
+        key: field_key, 
+        value: custom_field.key_from_response(field), 
+        user_id: user.id)
+    end
   end
 
   def self.import_person_to_pipedrive(person, app_key)
